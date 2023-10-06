@@ -1,0 +1,23 @@
+{
+    "stack-prefix": "s3-cust-res",
+    "stack-suffix": "cross-stack",
+    "template-path": "/cft/s3-custom-resource-lambda.yaml",
+    "project-name": "lilac",
+    "parameters": {
+        "devl": [
+            {
+                "Environment": "devl"
+            }
+        ],
+        "test": [
+            {
+                "Environment": "test"
+            }
+        ],
+        "prod": [
+            {
+                "Environment": "prod"
+            }
+        ]
+    }
+}
