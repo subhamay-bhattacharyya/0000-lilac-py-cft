@@ -1,0 +1,39 @@
+name: "AWS CloudFormation Create"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'feature**'
+    paths-ignore:
+      - '**/README.md'
+      - '**/.github/workflows/**.yaml'
+
+
+permissions:
+  id-token: write # This is required for aws oidc connection
+  contents: write # This is required for actions/checkout
+  issues: write
+  pull-requests: write # This is required for gh bot to comment PR  
+
+jobs:
+  create:
+    name: "deploy"
+    uses: subhamay-bhattacharyya/9999-reusable-wf/.github/workflows/cf-cicd-create.yaml@main
+    with:
+      deploy-reviewer-test: 142895397
+      deploy-reviewer-prod: 144537759
+      pr-approver: bsubhamay-approver
+    secrets: 
+      git-token: ${{ secrets.GIT_TOKEN }}
+      aws-region:  ${{ secrets.AWS_REGION }}
+      devl-aws-role-arn: ${{ secrets.DEVL_AWS_ROLE_ARN }}
+      devl-kms-key-arn:  ${{ secrets.DEVL_AWS_KMS_KEY_ARN }}
+      devl-code-repository-s3-bucket:  ${{ secrets.DEVL_CODE_REPOSITORY_S3_BUCKET }}
+      test-aws-role-arn: ${{ secrets.TEST_AWS_ROLE_ARN }}
+      test-kms-key-arn: ${{ secrets.TEST_AWS_KMS_KEY_ARN }}
+      test-code-repository-s3-bucket:  ${{ secrets.TEST_CODE_REPOSITORY_S3_BUCKET }}
+      prod-aws-role-arn: ${{ secrets.PROD_AWS_ROLE_ARN }}
+      prod-kms-key-arn: ${{ secrets.PROD_AWS_KMS_KEY_ARN }}
+      prod-code-repository-s3-bucket:  ${{ secrets.PROD_CODE_REPOSITORY_S3_BUCKET }}
